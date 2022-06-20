@@ -12,5 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb990b87683dfca468274ee46f100dae, type: 3}
   m_Name: Question #5
   m_EditorClassIdentifier: 
-  question: When putting the 8 Ball (when declared), and putting the Cue ball after
+  question: When putting the 8 Ball (after declared), and putting the Cue ball after
     it to a different pocket, who considered as the winner?
+  answers:
+  - The player who declared on 8 Ball
+  - The player who hadn't played yet
+  - Both won
+  - Both Lost
+  correctAnswerIndex: 1

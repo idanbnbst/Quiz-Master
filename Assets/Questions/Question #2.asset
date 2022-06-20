@@ -13,3 +13,9 @@ MonoBehaviour:
   m_Name: Question #2
   m_EditorClassIdentifier: 
   question: What color does ball #9 has?
+  answers:
+  - Red
+  - Yellow
+  - Blue
+  - Green
+  correctAnswerIndex: 1
