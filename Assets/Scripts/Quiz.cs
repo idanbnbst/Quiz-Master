@@ -8,7 +8,7 @@ public class Quiz : MonoBehaviour
     [Header("Questions")]
     [SerializeField] TextMeshProUGUI questionLabel;
     [SerializeField] List<QuestionSO> questions = new List<QuestionSO>();
-    QuestionSO currectQuestion;
+    QuestionSO currentQuestion;
 
     [Header("Answers")]
     [SerializeField] GameObject[] answerButton;
@@ -58,7 +58,7 @@ public class Quiz : MonoBehaviour
     void DisplayAnswer(int index)
     {
         Image buttonImage;
-        if (index == currectQuestion.GetCorrectAnswerIndex())
+        if (index == currentQuestion.GetCorrectAnswerIndex())
         {
             questionLabel.text = "Correct!";
             buttonImage = answerButton[index].GetComponent<Image>();
@@ -67,7 +67,7 @@ public class Quiz : MonoBehaviour
         }
         else
         {
-            string correctAnswerLabel = currectQuestion.GetAnswer(correctAnswerIndex);
+            string correctAnswerLabel = currentQuestion.GetAnswer(correctAnswerIndex);
             questionLabel.text = "Wrong. The correct answer is " + correctAnswerLabel;
             buttonImage = answerButton[correctAnswerIndex].GetComponent<Image>();
             buttonImage.sprite = correctAnswerSprite;
@@ -75,13 +75,13 @@ public class Quiz : MonoBehaviour
     }
     void DisplayQuestion()
     {
-        questionLabel.text = currectQuestion.GetQuestion();
+        questionLabel.text = currentQuestion.GetQuestion();
         for (int i = 0; i < answerButton.Length; i++)
         {
             TextMeshProUGUI buttonLabel = answerButton[i].GetComponentInChildren<TextMeshProUGUI>();
-            buttonLabel.text = currectQuestion.GetAnswer(i);
+            buttonLabel.text = currentQuestion.GetAnswer(i);
         }
-        correctAnswerIndex = currectQuestion.GetCorrectAnswerIndex();
+        correctAnswerIndex = currentQuestion.GetCorrectAnswerIndex();
     }
     void DisplayNextQuestion()
     {
@@ -97,9 +97,9 @@ public class Quiz : MonoBehaviour
     void GetRandomQuestion()
     {
         int random = Random.Range(0, questions.Count);
-        currectQuestion = questions[random];
-        if (questions.Contains(currectQuestion))
-            questions.Remove(currectQuestion);
+        currentQuestion = questions[random];
+        if (questions.Contains(currentQuestion))
+            questions.Remove(currentQuestion);
     }
     void SetDefaultButtonSprite()
     {

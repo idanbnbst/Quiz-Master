@@ -15,7 +15,7 @@ MonoBehaviour:
   question: When hitting opponents ball in first contact, what kind of foul is it?
   answers:
   - Free shot from anywhere on the table
-  - 2 shots, first shot behind the breaking line
-  - 1 shot behind the breaking line
-  - 2 shot from cue ball stop position
+  - Two shots, first shot behind the breaking line
+  - One shot behind the breaking line
+  - Two shots from cue ball stop position
   correctAnswerIndex: 3
