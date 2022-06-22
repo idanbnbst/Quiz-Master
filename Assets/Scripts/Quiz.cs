@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using System;
-
 public class Quiz : MonoBehaviour
 {
     [Header("Questions")]
     [SerializeField] TextMeshProUGUI questionLabel;
-    [SerializeField] QuestionSO question;
+    [SerializeField] List<QuestionSO> questions = new List<QuestionSO>();
+    QuestionSO currectQuestion;
 
     [Header("Answers")]
     [SerializeField] GameObject[] answerButton;
     int correctAnswerIndex;
+    bool hasAnsweredEarly;
 
     [Header("Buttons")]
     [SerializeField] Sprite defaultAnswerSprite;
@@ -23,10 +23,13 @@ public class Quiz : MonoBehaviour
     [SerializeField] Image timerImage;
     Timer timer;
 
+    [Header("Scoring")]
+    [SerializeField] TextMeshProUGUI scoreLabel;
+    ScoreKeeper scoreKeeper;
     void Start()
     {
         timer = FindObjectOfType<Timer>();
-        DisplayNextQuestion();
+        scoreKeeper = FindObjectOfType<ScoreKeeper>();
     }
 
     void Update()
@@ -34,55 +37,75 @@ public class Quiz : MonoBehaviour
         timerImage.fillAmount = timer.fillFraction;
         if (timer.loadNextQuestion)
         {
+            hasAnsweredEarly = false;
             DisplayNextQuestion();
             timer.loadNextQuestion = false;
         }
+        else if (!hasAnsweredEarly && !timer.isAnsweringQuestion)
+        {
+            DisplayAnswer(-1);
+            SetButtonState(false);
+        }
     }
-
-    public void OnAnswerSelected(int index)
+    void OnAnswerSelected(int index)
+    {
+        hasAnsweredEarly = true;
+        DisplayAnswer(index);
+        SetButtonState(false);
+        timer.CancelTimer();
+        scoreLabel.text = "Score: " + scoreKeeper.calcScore() + "%";
+    }
+    void DisplayAnswer(int index)
     {
         Image buttonImage;
-        if (index == question.GetCorrectAnswerIndex())
+        if (index == currectQuestion.GetCorrectAnswerIndex())
         {
             questionLabel.text = "Correct!";
             buttonImage = answerButton[index].GetComponent<Image>();
             buttonImage.sprite = correctAnswerSprite;
+            scoreKeeper.CorrectAnswers++;
         }
         else
         {
-            string correctAnswerLabel = question.GetAnswer(correctAnswerIndex);
+            string correctAnswerLabel = currectQuestion.GetAnswer(correctAnswerIndex);
             questionLabel.text = "Wrong. The correct answer is " + correctAnswerLabel;
             buttonImage = answerButton[correctAnswerIndex].GetComponent<Image>();
             buttonImage.sprite = correctAnswerSprite;
         }
-
-        SetButtonState(false);
-        timer.CancelTimer();
     }
-
     void DisplayQuestion()
     {
-        questionLabel.text = question.GetQuestion();
+        questionLabel.text = currectQuestion.GetQuestion();
         for (int i = 0; i < answerButton.Length; i++)
         {
             TextMeshProUGUI buttonLabel = answerButton[i].GetComponentInChildren<TextMeshProUGUI>();
-            buttonLabel.text = question.GetAnswer(i);
+            buttonLabel.text = currectQuestion.GetAnswer(i);
         }
-        correctAnswerIndex = question.GetCorrectAnswerIndex();
+        correctAnswerIndex = currectQuestion.GetCorrectAnswerIndex();
     }
     void DisplayNextQuestion()
     {
-        SetButtonState(true);
-        SetDefaultButtonSprite();
-        DisplayQuestion();
+        if (questions.Count > 0)
+        {
+            SetButtonState(true);
+            SetDefaultButtonSprite();
+            GetRandomQuestion();
+            DisplayQuestion();
+            scoreKeeper.QuestionsViewed++;
+        }
     }
-
+    void GetRandomQuestion()
+    {
+        int random = Random.Range(0, questions.Count);
+        currectQuestion = questions[random];
+        if (questions.Contains(currectQuestion))
+            questions.Remove(currectQuestion);
+    }
     void SetDefaultButtonSprite()
     {
         Image buttonImage = answerButton[correctAnswerIndex].GetComponent<Image>();
         buttonImage.sprite = defaultAnswerSprite;
     }
-
     void SetButtonState(bool state)
     {
         for (int i = 0; i < answerButton.Length; i++)

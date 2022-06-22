@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   question: When Cue Ball is put in a pocket, what type of foul is it?
   answers:
-  - 2 shots, first shot behind the breaking line
-  - 1 shot behind the braking line
+  - Two shots, first shot behind the breaking line
+  - One shot behind the braking line
   - Free ball from anywhere on the table
   - Not a foul
   correctAnswerIndex: 1
