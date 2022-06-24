@@ -1562,7 +1562,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d046a9b280a6441479dfda23f1106f51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToAnswer: 25
+  timeToAnswer: 15
   timeToDisplayCorrectAnswer: 2.5
   isAnsweringQuestion: 0
   loadNextQuestion: 0
