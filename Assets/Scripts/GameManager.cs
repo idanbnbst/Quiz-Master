@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
         {
             quiz.gameObject.SetActive(false);
             endScreen.gameObject.SetActive(true);
+            endScreen.ShowFinalScore();
         }
 
     }
