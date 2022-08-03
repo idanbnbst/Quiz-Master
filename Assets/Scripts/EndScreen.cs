@@ -11,7 +11,6 @@ public class EndScreen : MonoBehaviour
     {
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
     }
-
     public void ShowFinalScore()
     {
         finalScoreLabel.text = "Congratulations!\n Your score: " +

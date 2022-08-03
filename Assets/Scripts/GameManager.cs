@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     Quiz quiz;
     EndScreen endScreen;
-
     void Awake()
     {
         quiz = FindObjectOfType<Quiz>();
@@ -18,7 +17,6 @@ public class GameManager : MonoBehaviour
         quiz.gameObject.SetActive(true);
         endScreen.gameObject.SetActive(false);
     }
-
     void Update()
     {
         if (quiz.isComplete)
@@ -27,9 +25,7 @@ public class GameManager : MonoBehaviour
             endScreen.gameObject.SetActive(true);
             endScreen.ShowFinalScore();
         }
-
     }
-
     public void OnReplayClick()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
