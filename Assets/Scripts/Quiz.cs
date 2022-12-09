@@ -34,7 +34,7 @@ public class Quiz : MonoBehaviour
     {
         timer = FindObjectOfType<Timer>();
         scoreKeeper = FindObjectOfType<ScoreKeeper>();
-        initProgressBar();
+        InitProgressBar();
     }
     void Update()
     {
@@ -125,7 +125,7 @@ public class Quiz : MonoBehaviour
             button.interactable = state;
         }
     }
-    void initProgressBar()
+    void InitProgressBar()
     {
         progressBar.maxValue = questions.Count;
         progressBar.value = 0;
